@@ -1,0 +1,39 @@
+<mat-card class="stats-card">
+  <div class="stat-item">
+    <span class="stat-value">{{ stats().total }}</span>
+    <span class="stat-label">Total Requests</span>
+  </div>
+  <div class="stat-item approved">
+    <span class="stat-value">{{ stats().approved }}</span>
+    <span class="stat-label">Approved</span>
+  </div>
+  <div class="stat-item rejected">
+    <span class="stat-value">{{ stats().rejected }}</span>
+    <span class="stat-label">Rejected</span>
+  </div>
+  <div class="stat-item pending">
+    <span class="stat-value">{{ stats().pending }}</span>
+    <span class="stat-label">Pending</span>
+  </div>
+</mat-card>
+
+<div class="history-list">
+  @for (item of history(); track item.id) {
+    <mat-card class="history-item">
+      <div class="history-content">
+        <div class="user-info">
+          <mat-icon>person</mat-icon>
+          <span>{{ item.user }}</span>
+        </div>
+        <div class="resource-info">
+          <span>{{ item.resource }}</span>
+          <span class="type">{{ item.type }}</span>
+        </div>
+        <div class="action-info">
+          <span class="action-badge" [class]="item.action.toLowerCase()">{{ item.action }}</span>
+          <span class="date">{{ item.date }}</span>
+        </div>
+      </div>
+    </mat-card>
+  }
+</div>

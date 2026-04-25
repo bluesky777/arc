@@ -1,0 +1,29 @@
+<div class="approval-grid">
+  @for (item of approvals(); track item.id) {
+    <mat-card class="approval-card">
+      <mat-card-header>
+        <mat-icon class="resource-icon">folder</mat-icon>
+        <mat-card-title>{{ item.resource }}</mat-card-title>
+        <mat-card-subtitle>{{ item.type }} Access</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="detail-row">
+          <span class="label">User:</span>
+          <span>{{ item.user }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Requested:</span>
+          <span>{{ item.requested }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Priority:</span>
+          <span class="priority-badge" [class]="item.priority.toLowerCase()">{{ item.priority }}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="approve(item.id)">Approve</button>
+        <button mat-stroked-button color="warn" (click)="reject(item.id)">Reject</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
