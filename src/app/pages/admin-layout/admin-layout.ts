@@ -31,6 +31,12 @@ export class AdminLayout {
   constructor(private router: Router) {}
 
   logout() {
+    if (window.sessionStorage) {
+      window.sessionStorage.clear();
+    }
+
+    window.location.href = "https://riudnt.auth.us-east-1.amazoncognito.com/logout?client_id=220jojpvt025ti9lgcapn5hbnm&logout_uri=http://localhost:4200/login";
+
     this.router.navigate(['/login']);
   }
 }

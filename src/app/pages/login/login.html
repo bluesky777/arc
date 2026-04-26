@@ -4,19 +4,23 @@
       <mat-card-title>Sign In</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password">
-        </mat-form-field>
-        <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid">
-          Login
-        </button>
-      </form>
+      <ng-template #noAuth>
+        Please, authenticate.
+        <hr />
+      </ng-template>
+      <div *ngIf="isAuthenticated; else noAuth">
+        <br />
+
+        Is Authenticated: {{ isAuthenticated }}
+
+        <br />
+        userData
+        <pre>{{ userData$ | async | json }}</pre>
+        <br />
+    </div>
+      <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="isAuthenticated">
+        Login
+      </button>
     </mat-card-content>
   </mat-card>
 </div>
