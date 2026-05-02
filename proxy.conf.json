@@ -1,0 +1,11 @@
+{
+  "/api/**": {
+    "target": "https://13wpcpc90e.execute-api.us-east-1.amazonaws.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/init"
+    },
+    "logLevel": "debug"
+  }
+}

@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://13wpcpc90e.execute-api.us-east-1.amazonaws.com/init';
+export const API_BASE_URL = '/api';
