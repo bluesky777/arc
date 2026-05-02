@@ -1,3 +1,45 @@
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="createRequest()">
+    <mat-card-header>
+      <mat-card-title>New Access Request</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>User Email</mat-label>
+          <input matInput formControlName="userEmail" readonly />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Resource</mat-label>
+          <mat-select formControlName="resource">
+            <mat-option *ngFor="let resource of resourceOptions()" [value]="resource">
+              {{ resource }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row radio-group-row">
+        <span class="radio-group-label">Request Type</span>
+        <mat-radio-group formControlName="type" class="type-radio-group">
+          <mat-radio-button value="READ">READ</mat-radio-button>
+          <mat-radio-button value="WRITE">WRITE</mat-radio-button>
+          <mat-radio-button value="ADMIN">ADMIN</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || submitDisabled()">Save</button>
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
 <mat-card class="page-card">
   <mat-card-header>
     <mat-card-title>Access Requests</mat-card-title>

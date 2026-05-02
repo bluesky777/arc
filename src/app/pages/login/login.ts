@@ -1,58 +1,31 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    CommonModule,
-  ],
+  imports: [MatCardModule, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login {
+export class Login implements OnInit {
   private readonly oidcSecurityService = inject(OidcSecurityService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
-  configuration$ = this.oidcSecurityService.getConfiguration();
-
-  userData$ = this.oidcSecurityService.userData$;
-
-  isAuthenticated = false;
-
-  constructor(private router: Router) {}
-  
   ngOnInit(): void {
-    this.oidcSecurityService.checkAuth().subscribe(
-      ({ isAuthenticated }) => {
-        this.isAuthenticated = isAuthenticated;
-
-        console.warn('authenticated: ', isAuthenticated);
-
-        if (isAuthenticated) {
-          this.router.navigate(['/admin/access-requests']);
-        }
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
+      if (isAuthenticated) {
+        this.authService.loadAuthData();
+        this.router.navigate(['/admin/access-requests']);
       }
-    );
-
-    this.oidcSecurityService.isAuthenticated$.subscribe(
-      ({ isAuthenticated }) => {
-        console.warn('isAuthenticated$: ', isAuthenticated);
-      }
-    );
+    });
   }
 
-  onSubmit() {
+  onLogin() {
     this.oidcSecurityService.authorize();
   }
 }
